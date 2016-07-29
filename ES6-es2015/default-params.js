@@ -1,19 +1,25 @@
 'use strict'
 
-function mandatory () {
-  throw new Error('This param is mandatory')
+const obj = {
+  mandatory (fn) {
+    const msg = `Missing ${fn.name} call`
+    throw new Error(msg)
+  }
 }
 
-
-function hello ({ weight, name = 'Rick', position = {x: 4, y: 10}} = {}) {
-  console.log(name, weight, position)
-  console.log(arguments)
+function hello ({
+  weight = obj.mandatory(),
+  name = 'Rick',
+  position: {x = 4, y = 10} = {}
+} = {}) {
+  console.log(name, weight, x, y)
   return weight
 }
 
 hello({
+  weight: 56,
   name: 'Maria',
   position: {
     x: 15
-  }
+  },
 })

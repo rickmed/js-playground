@@ -1,122 +1,157 @@
 'use strict'
-
-// /* Simple usage */
-
-let Dog = () => {
-    const sound = 'woof'
-    return {
-        talk: () => console.log(sound),
-        property: 2
-    }
-}
-
-let charlie = Dog()
-console.log(charlie)
-charlie.talk()
-
+// try using API in other file without strict to see if freeze throws
 //
-//
-// /* Simple Composition */
-//
-// function bark (name) {
-//     console.log(name)
-// }
-//
-// function bark2 () {
-//     console.log(this.name)
-// }
-//
-// function Cat (name) {
-//
-//     return {
-//         bark,
-//         bark2,
-//         name
-//     }
-// }
-//
-// let cat1 = new Cat('bubbles')
-//
-// cat1.bark('epale')
-// cat1.bark2()
 
-
-/* More complex composition */
-
-// this method pattern can be chained
-// ({}) in arrow functions returns an object literal
-const Barker = (state) => ({
-
-  // ES6: "bark (param)" is same as "bark: function (param)"
-  bark (msg) {
-    msg = msg || ''
-    console.log(`Woof, I am name hello ${state.name} ${msg} WHAT!`)
-    return this
+function Character () {
+  return {
+    gameType: 'fightCharacter',  // can use default props
+    canDie: true,
+    describe () {
+      return `An ${this.animalType}, with ${this.furColor} fur,
+        ${this.legs} legs, and a ${this.tail} tail.`
+    },
   }
-})
-
-// if there is no need for initial state to be set in the method like above,
-// a wraper function is not needed. You need to return and object literal
-const Walker = {
-    walk: (speed) => console.log('This is my current speed:', speed)
 }
 
-const Killer = (state) => ({
-    kill: () => state.position = state.position + state.speed
-})
 
 
-/*
- * Composing a new object with the previously defined methods
- * with shared and private default state
- */
-const murderRobotDog = (name, param) => {
-    let state = {
-        name,
-        speed: 30,
-        size: 'big'
-    }
-    return Object.assign(
-        { driver: param },
-        Barker(state),
-        Walker,
-        Killer(state)
-    )
+function hardAttack (state) {
+  const { hard } = state.attackPoints
+  state.lifePoints += hard
+  console.log(`Hard Attack! Added LifePoints. Total: ${state.lifePoints}`)
 }
 
-let sniffles = murderRobotDog('sniffles', 'yes')
+function defend (state, points) {
+  const orig = state.lifePoints
+  state.lifePoints -= points
+  console.log(`Someone attacked me.
+    Reducing ${points} lifePoints.
+    Original lifePoints: ${orig}
+    Remaining: ${state.lifePoints}`)
+  return this
+}
 
-sniffles.__proto__.talk = x => {console.log(x); return this}
+function getState (state) {
+  console.log(state)
+  return state
+}
 
-sniffles.bark(sniffles.driver).bark().bark().walk(30).talk('YELLOOO')
-console.log(sniffles)
-console.log(sniffles.prototype)
 
-
-// // // "INHERITANCE - COMPOSITION" PATTERN ========================
-
-// const pooper = () => ({
-//     poop: () => console.log('poop')
-// });
-
-// const Animal = () => {
-//     let state = {
-//         move: () => {
-//             console.log('move')
-//         }
-//     }
-//     return Object.assign({}, state, pooper())
+// const FightDogProto = {
+//   // compose methods here
+//   // init like: return Object.create(FightDogProto, ownProps)
 // }
 
-// const Dog = (name) => {
-//     const parent = Animal();
-//     let state = {
-//         bark: () => console.log('Bark! I am', name)
-//     }
-//     return Object.assign({}, parent, state)
-// }
+import { partial } from 'lodash/fp'
+// try making using functions returning this to return the object
 
-// let dog = Dog('charlie');
-// dog.poop()
-// dog.move()
-// dog.bark()
+function addMethods ({ instance, state, methods, }) {
+
+  methods.forEach( (fn) => {
+    instance[fn.name] = partial(fn, [state])
+  })
+
+}
+
+
+function FightDog (spec) {
+
+// default params
+  const defSpec = {
+    weapon: 'sword',
+    lifePoints: 100,
+  }
+  spec = Object.assign(defSpec, spec)
+
+  // need to create a new object out of spec to keep it private
+  // -otherwise user might mutate spec later on.
+  const state = {...spec}
+
+  // for instance methods chaining:
+  // pass obj for methods to return the obj instead of this.
+  const instance = {}
+  addMethods({ instance, state, methods: [defend, getState] })
+  return instance
+}
+
+const ins1 = FightDog({
+  attackPoints: {
+    weak: 40,
+    hard: 10,
+  },
+  defendPoints: 10,
+  name: 'lasko',
+  species: 'labrador',
+  tail: ['long, skinny'],
+})
+
+const ins2 = FightDog({
+  attackPoints: {
+    weak: 40,
+    hard: 10,
+  },
+  defendPoints: 10,
+  name: 'lasko',
+  species: 'labrador',
+  tail: ['long, skinny'],
+})
+
+// console.log(lasko)
+
+ins1
+  .defend(12)
+
+ins2
+  .defend(17)
+  // .getState()
+
+
+
+//
+//
+//
+// /*
+// COMPOSITIONAL DELEGATED PROTOYPAL
+// Animal is a delegate protoype
+// mouse could be composed from +1 protoype with object.assign
+//  */
+// const Animal =
+//
+//
+// const mouse = Object.assign(Object.create(Animal), {
+//   animalType: 'mouse',
+//   furColor: 'brown',
+//   legs: 4,
+//   tail: 'long, skinny',
+//   ownMethod() {
+//     console.log('I am a mouse')
+//   },
+//   // describe() {
+//   //   const type = this.animalType
+//   //   return 'Overwrite my parents method. My type is ' + type
+//   // },
+// })
+//
+// console.log('Mouse own method/props:\n', mouse) // 'parent' prop is not present
+// console.log('\nDelegated methods/props:\n', mouse.__proto__)
+// console.log(Object.keys(mouse))
+
+
+
+// /*
+// Crockford model
+// note the returned object only contains methods
+// bc it uses state separated from instantiation
+// spec passed in only used for initial configuration
+//  */
+// function constructor(spec) {
+//   let {member} = spec,
+//       {other} = other_constructor(spec),
+//       method = function () {
+//         // member, other, method, spec
+//       };
+//   return Object.freeze({
+//     method,
+//     other
+//   });
+// }
