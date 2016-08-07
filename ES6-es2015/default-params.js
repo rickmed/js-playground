@@ -8,18 +8,22 @@ const obj = {
 }
 
 function hello ({
-  weight = obj.mandatory(),
+  // weight = obj.mandatory(),
   name = 'Rick',
   position: {x = 4, y = 10} = {}
 } = {}) {
-  console.log(name, weight, x, y)
-  return weight
+  console.log(arguments[0])
+  return name
 }
 
-hello({
-  weight: 56,
-  name: 'Maria',
-  position: {
-    x: 15
-  },
-})
+hello({})
+
+// function yes ({newDog}) {
+//   console.log(newDog)
+// }
+//
+// yes({
+//   newDog: {
+//     age: 332
+//   }
+// })

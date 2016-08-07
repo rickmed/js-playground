@@ -138,20 +138,20 @@ ins2
 
 
 
-// /*
-// Crockford model
-// note the returned object only contains methods
-// bc it uses state separated from instantiation
-// spec passed in only used for initial configuration
-//  */
-// function constructor(spec) {
-//   let {member} = spec,
-//       {other} = other_constructor(spec),
-//       method = function () {
-//         // member, other, method, spec
-//       };
-//   return Object.freeze({
-//     method,
-//     other
-//   });
-// }
+/*
+Crockford model
+note the returned object only contains methods
+bc it uses state separated from instantiation
+spec passed in only used for initial configuration
+ */
+function constructor(spec) {
+  let {member} = spec,
+      {other} = other_constructor(spec),
+      method = function () {
+        // member, other, method, spec
+      };
+  return Object.freeze({
+    method,
+    other
+  });
+}

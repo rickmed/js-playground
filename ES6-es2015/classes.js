@@ -24,9 +24,11 @@ Inheritance
  */
 
 class Employee {
-  constructor(firstName, familyName) {
+  constructor(firstName, familyName, pet = 'charlie') {
     this._firstName = firstName
     this._familyName = familyName
+    this._pet = pet
+
   }
 
   getFullName() {
@@ -35,7 +37,7 @@ class Employee {
 }
 
 class Manager extends Employee {
-  constructor(firstName, familyName) {
+  constructor(firstName, familyName = 'perez') {
     super(firstName, familyName)  // calls the parent constructor()
     this._managedEmployees = []
   }
@@ -45,8 +47,10 @@ class Manager extends Employee {
   }
 }
 
+
+
 console.log(Employee)
-const diego = new Manager('diego', 'luna')
+const diego = new Manager()
 console.log(diego)
 diego.addEmployee('carlos perez')
 console.log(diego._managedEmployees)

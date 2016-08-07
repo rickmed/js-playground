@@ -1,4 +1,4 @@
-const { compose, methods, init } = require('stampit').default
+const { compose, methods, init, props } = require('stampit').default
 
 const InitFoo = init({
   init1 ({name}) {
@@ -10,14 +10,15 @@ const InitFoo = init({
   }
 })
 
-const HasFoo = compose({
-  properties: {
-    foo: 'default foo!'
-  }
-})
+const arr = [1, 2, 3]
+
+const HasFoo = props({ arr })
 
 
 const obj = HasFoo()  // { foo: 'default foo!' }
+const obj2 = HasFoo()  // { foo: 'default foo!' }
+
+console.log(obj2.arr === obj.arr)
 
 const PrintFoo = methods({
   printFoo() {
@@ -46,7 +47,7 @@ const Foo = compose(InitFoo, HasFoo, PrintFoo)
 // const Foo = HasFoo.compose(PrintFoo)
 // const Foo = PrintFoo.compose(HasFoo)
 const obj3 = Foo({name: 'Ricky', age: 31})
-console.log(obj3.hasOwnProperty('foo'))
+// console.log(obj3.hasOwnProperty('foo'))
 obj3.printFoo() // default foo!
 
 

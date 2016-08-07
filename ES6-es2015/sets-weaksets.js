@@ -1,7 +1,7 @@
 const mySet = new Set([1, 'epale'])
 
 const myObj = {}
-const myFunc = () => {}
+const myFunc = () => { console.log('Hi!')}
 
 mySet.add('hi')
 .add(myObj)
@@ -16,9 +16,9 @@ console.log(mySet.delete('epa'), 'returns false if not existed')
 console.log(mySet.size)
 // mySet.clear()
 // console.log(mySet.size)
-console.log(mySet.values())
-console.log(mySet.keys())
-console.log(mySet.entries())
+console.log('Values: ', mySet.values())
+console.log('Keys: ', mySet.keys())
+console.log('Entries: ', mySet.entries())
 
 console.log('\n')
 console.log('Values: ')
@@ -26,4 +26,5 @@ mySet.forEach( value => console.log(value) )
 
 
 // convert to array
-console.log([...mySet].length)
+const arr = [...mySet]
+console.log(arr)
