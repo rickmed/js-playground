@@ -1,4 +1,3 @@
-console.log('dsada')
+const assert = require('assert');
 
-
-
+assert.ok(true)

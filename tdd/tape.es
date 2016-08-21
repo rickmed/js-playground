@@ -26,3 +26,30 @@ test('The add method', function(test) {
   // if using a custom library the optional message won't appear until
   // it errs
 })
+
+
+/*
+Eric Elliot template
+*/
+// import test from 'tape';
+// import compose from '../source/compose';
+
+// test('Compose function output type', assert => {
+//   const actual = typeof compose();
+//   const expected = 'function';
+
+//   assert.equal(actual, expected,
+//     'compose() should return a function.');
+
+//   assert.end();
+// });
+
+// test('What component aspect are you testing?', assert => {
+//   const actual = 'What is the actual output?';
+//   const expected = 'What is the expected output?';
+
+//   assert.equal(actual, expected,
+//     'What should the feature do?');
+
+//   assert.end();
+// });

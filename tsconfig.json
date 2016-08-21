@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "sourceMap": false,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "strictNullChecks": true,
+    "listFiles": true,
+    "pretty": true,
+    "outDir": "typescriptPlay/build/",
+    "types": [
+      "node"
+    ]
+  },
+  "files": [
+    "nodejs_native/server.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".vscode"
+  ],
+  "compileOnSave": false
+}
