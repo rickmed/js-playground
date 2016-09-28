@@ -1,0 +1,24 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    // // Flow configuration
+
+  // A path to flow that is used for your project
+  "flow.path": "C:/Users/rickm/Documents/Google Drive/Side-projects/Programming/NodeJS/playground-js/node_modules/flow-bin/vendor/flow.exe",
+
+ // TypeScript
+
+  // Specifies the folder path containing the tsserver and lib*.d.ts files to use.
+  "typescript.tsdk": ".\\node_modules\\typescript\\lib",
+
+  // Enables tracing of messages send to the TS server
+  "typescript.tsserver.trace": "off",
+
+  // Enables experimental auto build. Requires 1.9 dev or 2.x tsserver version and a restart of VS Code after changing it.
+  "typescript.tsserver.experimentalAutoBuild": false,
+
+  // Complete functions with their parameter signature.
+  "typescript.useCodeSnippetsOnMethodSuggest": false,
+
+  // Enable / disable JavaScript validation
+  "javascript.validate.enable": false
+}

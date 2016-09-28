@@ -21,7 +21,7 @@ function handler(req, resp) {
     resp.end('nodejs');
 }
 http.createServer(handler)
-    .listen(5000, console.log('server started') )
+    .listen(4000, console.log('server started') )
 
 
 
