@@ -4,7 +4,7 @@
     "name": "Launch",
     "type": "node",
     "request": "launch",
-    "program": "${workspaceRoot}/server_frameworks/spirit/spirit-learn.js",
+    "program": "${workspaceRoot}/reactive_programming/most/index.js",
     "stopOnEntry": false,
     "args": [],
     "cwd": "${workspaceRoot}",
